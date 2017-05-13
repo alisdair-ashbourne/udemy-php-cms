@@ -38,8 +38,16 @@
         echo "<tr>"
             . "<td>$post_id</td>"
             . "<td>$post_author</td>"
-            . "<td>$post_title</td>"
-            . "<td>$post_category_id</td>"
+            . "<td>$post_title</td>";
+
+            $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id} ";
+            $update_category_query = mysqli_query($connection, $query);
+            check_query($update_category_query);
+
+            $row = mysqli_fetch_assoc($update_category_query);
+            $post_category_title = $row['cat_title'];
+
+        echo "<td>$post_category_title</td>"
             . "<td>$post_status</td>"
             . "<td><img src='../images/$post_image' width='200'></td>"
             . "<td>$post_tags</td>"
