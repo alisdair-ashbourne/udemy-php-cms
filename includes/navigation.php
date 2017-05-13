@@ -28,15 +28,16 @@
             <ul class="nav navbar-nav">
 
                 <?php
-                load_navigation_categories()
+                load_navigation_categories();
                 ?>
 
             </ul>
             <ul class="nav navbar-right top-nav">
-                <li><a href="/cms/admin/index.php">Admin</a></li>
+                <li><a href="/cms/admin/admin-index.php">Admin</a></li>
             </ul>
         </div>
-            <!-- /.navbar-collapse -->
+        <!-- /.navbar-collapse -->
+
     </div>
     <!-- /.container -->
 </nav>

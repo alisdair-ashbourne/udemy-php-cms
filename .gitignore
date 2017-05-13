@@ -1,2 +1,6 @@
+# SASS
 .sass-cache/
 *.css.map
+
+# Image Folder
+images/
