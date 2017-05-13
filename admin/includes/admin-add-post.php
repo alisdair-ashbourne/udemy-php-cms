@@ -5,27 +5,8 @@
  * Date: 4/20/2017
  * Time: 9:42 PM
  */
-?>
 
-<?php
-if(isset($_POST['create_post'])) {
-
-    var_dump($_POST);
-
-    $post_title = $_POST['post_title'];
-    $post_category_id = $_POST['post_category_id'];
-    $post_status = $_POST['post_status'];
-    $post_author = $_POST['post_author'];
-    $post_tags = $_POST['post_tags'];
-    $post_content = $_POST['post_content'];
-
-    $post_date = date('d-m-y');
-    $post_comment_count = 1;
-    $post_image = $_FILES['post_image']['name'];
-    $post_image_temp = $_FILES['post_image']['tmp_name'];
-
-    move_uploaded_file($post_image_temp, "../images/$post_image");
-}
+create_new_post();
 ?>
 
 <form action="" method="POST" enctype="multipart/form-data">

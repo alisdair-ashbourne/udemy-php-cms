@@ -11,7 +11,8 @@
  *
  * Reads the categories from the database and places them into tab rows
  */
-function read_categories() {
+function read_categories()
+{
     global $connection;
 
     $query = "SELECT * FROM categories LIMIT 10 ";
@@ -34,7 +35,8 @@ function read_categories() {
  *
  * Deletes the category declared by GET['delete'] from the database
  */
-function delete_category() {
+function delete_category()
+{
     global $connection;
 
     if (isset($_GET['delete'])) {
@@ -53,7 +55,8 @@ function delete_category() {
  *
  * Creates a new category in the database
  */
-function insert_categories() {
+function insert_categories()
+{
     global $connection;
 
     if (isset($_POST['submit'])) {
@@ -78,7 +81,8 @@ function insert_categories() {
  *
  * Updates a category in the database
  */
-function update_category() {
+function update_category()
+{
     global $connection;
 
     $cat_id = $_GET['update'];
@@ -112,11 +116,48 @@ function update_category() {
 }
 
 /**
+ * function create_new_post()
+ *
+ * Creates a new post in the database
+ */
+
+function create_new_post()
+{
+    if (isset($_POST['create_post'])) {
+        global $connection;
+
+        $post_title = $_POST['post_title'];
+        $post_category_id = $_POST['post_category_id'];
+        $post_status = $_POST['post_status'];
+        $post_author = $_POST['post_author'];
+        $post_tags = $_POST['post_tags'];
+        $post_content = $_POST['post_content'];
+        $post_date = date('d-m-y');
+        $post_comment_count = 1;
+        $post_image = $_FILES['post_image']['name'];
+        $post_image_temp = $_FILES['post_image']['tmp_name'];
+
+        move_uploaded_file($post_image_temp, "../images/$post_image");
+
+        $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
+        $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', now(), ";
+        $query .= "'{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}')";
+
+        $add_new_post = mysqli_query($connection, $query);
+
+        if (!$add_new_post)
+            die('UPDATE FAILED ' . mysqli_error($connection));
+
+    }
+}
+
+/**
  * function load_all_posts()
  *
  * Loads all post content from the database into HTML markdown
  */
-function load_all_posts() {
+function load_all_posts()
+{
     global $connection;
 
     $query = "SELECT * FROM posts";
@@ -154,13 +195,14 @@ function load_all_posts() {
  *
  * Loads categories in the form of linked HTML list items
  */
-function load_navigation_categories() {
+function load_navigation_categories()
+{
     global $connection;
 
     $query = "SELECT * FROM categories";
     $select_all_categories_query = mysqli_query($connection, $query);
 
-    while($row = mysqli_fetch_assoc($select_all_categories_query)){
+    while ($row = mysqli_fetch_assoc($select_all_categories_query)) {
         $cat_title = $row['cat_title'];
         echo "<li><a href='#'>{$cat_title}</a></li>";
     }
