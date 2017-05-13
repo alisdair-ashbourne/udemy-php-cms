@@ -45,7 +45,19 @@
             . "<td>$post_tags</td>"
             . "<td>$post_comment_count</td>"
             . "<td>$post_date</td>"
+            . "<td><a class='btn btn-danger' href='?delete=$post_id'><i class='fa fa-trash'></i></a></td>"
             . "</tr>";
+    }
+
+    if(isset($_GET['delete'])) {
+        $the_post_id = $_GET['delete'];
+        $query = "DELETE FROM posts WHERE post_id = '{$the_post_id}' ";
+        $delete_query = mysqli_query($connection, $query);
+
+        if(!$delete_query)
+            die(mysqli_error($connection) . " DELETE QUERY FAILED");
+
+        header("Location: admin-posts.php");
     }
     ?>
     <tbody>
