@@ -6,6 +6,11 @@
  * Time: 7:34 PM
  */
 
+/**
+ * function read_categories()
+ *
+ * Reads the categories from the database and places them into tab rows
+ */
 function read_categories() {
     global $connection;
 
@@ -24,6 +29,11 @@ function read_categories() {
     }
 }
 
+/**
+ * function delete_category()
+ *
+ * Deletes the category declared by GET['delete'] from the database
+ */
 function delete_category() {
     global $connection;
 
@@ -38,6 +48,11 @@ function delete_category() {
     }
 }
 
+/**
+ * function insert_categories()
+ *
+ * Creates a new category in the database
+ */
 function insert_categories() {
     global $connection;
 
@@ -58,6 +73,11 @@ function insert_categories() {
     }
 }
 
+/**
+ * function update_category()
+ *
+ * Updates a category in the database
+ */
 function update_category() {
     global $connection;
 
@@ -88,5 +108,60 @@ function update_category() {
             die('UPDATE FAILED ' . mysqli_error($connection));
 
         header("Location: admin-categories.php");
+    }
+}
+
+/**
+ * function load_all_posts()
+ *
+ * Loads all post content from the database into HTML markdown
+ */
+function load_all_posts() {
+    global $connection;
+
+    $query = "SELECT * FROM posts";
+    $select_all_posts_query = mysqli_query($connection, $query);
+
+    while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
+
+        $post_title = $row['post_title'];
+        $post_author = $row['post_author'];
+        $post_date = $row['post_date'];
+        $post_image = $row['post_image'];
+        $post_content = $row['post_content'];
+        $post_tags = $row['post_tags'];
+        $post_comment_count = $row['post_comment_count'];
+        ?>
+
+        <h2><a href="#"><?php echo $post_title; ?></a></h2>
+        <p class="lead">by <a href="index.php"><?php echo $post_author ?></a></p>
+        <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
+
+        <hr>
+        <img class="img-responsive" src="<?php echo "images/" . $post_image; ?>" alt="">
+        <hr>
+
+        <p><?php echo $post_content ?></p>
+        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <hr>
+
+    <?php }
+}
+
+/**
+ * function load_navigation_categories()
+ *
+ * Loads categories in the form of linked HTML list items
+ */
+function load_navigation_categories() {
+    global $connection;
+
+    $query = "SELECT * FROM categories";
+    $select_all_categories_query = mysqli_query($connection, $query);
+
+    while($row = mysqli_fetch_assoc($select_all_categories_query)){
+        $cat_title = $row['cat_title'];
+        echo "<li><a href='#'>{$cat_title}</a></li>";
     }
 }
