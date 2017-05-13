@@ -50,8 +50,9 @@
 
                     while($category = mysqli_fetch_assoc($categories_query)) {
                         $cat_title = $category['cat_title'];
+                        $cat_id = $category['cat_id'];
                         ?>
-                        <li><a href="#"><?php echo $cat_title; ?></a>
+                        <li><a href="category.php?category=<?php echo $cat_id; ?>"><?php echo $cat_title; ?></a>
                         <?php
                     }
                     ?>
