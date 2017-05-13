@@ -177,8 +177,6 @@ function load_post()
         <hr>
 
         <p><?php echo $post_content ?></p>
-        <a class="btn btn-primary" href="#">Read More <span
-                    class="glyphicon glyphicon-chevron-right"></span></a>
 
         <hr>
 
@@ -205,7 +203,7 @@ function load_all_posts()
         $post_author = $row['post_author'];
         $post_date = $row['post_date'];
         $post_image = $row['post_image'];
-        $post_content = $row['post_content'];
+        $post_content = substr($row['post_content'], 0, 200) . "...";
         $post_tags = $row['post_tags'];
         $post_comment_count = $row['post_comment_count'];
         ?>
@@ -219,7 +217,7 @@ function load_all_posts()
         <hr>
 
         <p><?php echo $post_content ?></p>
-        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+        <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
         <hr>
 
@@ -248,7 +246,7 @@ function load_category_posts()
             $post_author = $row['post_author'];
             $post_date = $row['post_date'];
             $post_image = $row['post_image'];
-            $post_content = $row['post_content'];
+            $post_content = substr($row['post_content'], 0, 200) . "...";
             $post_tags = $row['post_tags'];
             $post_comment_count = $row['post_comment_count'];
             ?>
@@ -262,7 +260,7 @@ function load_category_posts()
             <hr>
 
             <p><?php echo $post_content ?></p>
-            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
             <hr>
 
@@ -274,18 +272,25 @@ function load_category_posts()
  * function load_navigation_categories()
  *
  * Loads categories in the form of linked HTML list items
+ * @param   int $category_count     Number of categories to display, default 5, max of 5
  */
-function load_navigation_categories()
+function load_navigation_categories($category_count = 5)
 {
     global $connection;
 
-    $query = "SELECT * FROM categories";
+    // Allow for a max of 5 categories in the navigation
+    $category_count > 5 ?
+        $query = "SELECT * FROM categories LIMIT 5 " :
+        $query = "SELECT * FROM categories LIMIT {$category_count} ";
+
     $select_all_categories_query = mysqli_query($connection, $query);
     check_query($select_all_categories_query);
 
     while ($row = mysqli_fetch_assoc($select_all_categories_query)) {
+        $cat_id = $row['cat_id'];
         $cat_title = $row['cat_title'];
-        echo "<li><a href='#'>{$cat_title}</a></li>";
+
+        echo "<li><a href='category.php?category={$cat_id}'>{$cat_title}</a></li>";
     }
 }
 
