@@ -27,9 +27,9 @@
                 <li class="message-preview">
                     <a href="#">
                         <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
+                            <span class="pull-left">
+                                <img class="media-object" src="http://placehold.it/50x50" alt="">
+                            </span>
                             <div class="media-body">
                                 <h5 class="media-heading">
                                     <strong>John Smith</strong>
@@ -119,7 +119,7 @@
             </li>
 
             <li>
-                <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Comments</a>
+                <a href="admin-comments.php"><i class="fa fa-fw fa-desktop"></i> Comments</a>
             </li>
 
             <li>

@@ -16,21 +16,15 @@ include "includes/admin-header.php"; ?>
         <div class="container-fluid">
 
             <h1 class="page-header">
-                Posts
+                Comments
             </h1>
 
             <?php
             isset($_GET['source']) ? $source = $_GET['source'] : $source = '';
 
             switch ($source) {
-                case 'add_post';
-                    include "includes/admin-add-post.php";
-                    break;
-                case 'edit_post';
-                    include "includes/admin-edit-post.php";
-                    break;
                 default;
-                    include "includes/admin-view-all-posts.php";
+                    include "includes/admin-view-all-comments.php";
             }
             ?>
 

@@ -53,8 +53,8 @@
             . "<td>$post_tags</td>"
             . "<td>$post_comment_count</td>"
             . "<td>$post_date</td>"
-            . "<td><a class='btn btn-primary' href='?source=edit_post&p_id=$post_id'><i class='fa fa-pencil'></i></a></td>"
-            . "<td><a class='btn btn-danger' href='?delete=$post_id'><i class='fa fa-trash'></i></a></td>"
+            . "<td class='text-center'><a class='btn btn-primary' href='?source=edit_post&p_id=$post_id'><i class='fa fa-pencil'></i></a></td>"
+            . "<td class='text-center'><a class='btn btn-danger' href='?delete=$post_id'><i class='fa fa-trash'></i></a></td>"
             . "</tr>";
     }
 
