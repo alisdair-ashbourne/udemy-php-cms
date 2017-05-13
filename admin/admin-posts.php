@@ -28,6 +28,9 @@ include "includes/admin-header.php"; ?>
                 case 'add_post';
                     include "includes/admin-add-post.php";
                     break;
+                case 'edit_post';
+                    include "includes/admin-edit-post.php";
+                    break;
                 default;
                     include "includes/admin-view-all-posts.php";
             }

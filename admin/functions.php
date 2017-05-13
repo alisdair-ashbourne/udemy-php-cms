@@ -18,6 +18,8 @@ function read_categories()
     $query = "SELECT * FROM categories LIMIT 10 ";
     $select_all_categories = mysqli_query($connection, $query);
 
+    check_query($select_all_categories);
+
     while ($row = mysqli_fetch_assoc($select_all_categories)) {
         $cat_id = $row['cat_id'];
         $cat_title = $row['cat_title'];
@@ -43,9 +45,7 @@ function delete_category()
         $the_cat_id = $_GET['delete'];
         $query = "DELETE FROM categories WHERE cat_id = {$the_cat_id} ";
         $delete_query = mysqli_query($connection, $query);
-
-        if (!$delete_query)
-            die('DELETE FAILED ') . mysqli_error($connection);
+        check_query($delete_query);
         header("Location: admin-categories.php");
     }
 }
@@ -68,10 +68,8 @@ function insert_categories()
         else {
             $query = "INSERT INTO categories(cat_title) ";
             $query .= "VALUE('{$cat_title}')";
-
             $create_category_query = mysqli_query($connection, $query);
-            if (!$create_category_query)
-                die('QUERY FAILED ') . mysqli_error($connection);
+            check_query($create_category_query);
         }
     }
 }
@@ -90,9 +88,7 @@ function update_category()
     // Begin Editing
     $query = "SELECT * FROM categories WHERE cat_id = {$cat_id} ";
     $update_category_query = mysqli_query($connection, $query);
-
-    if (!$update_category_query)
-        die('QUERY FAILED ') . mysqli_error($connection);
+    check_query($update_category_query);
 
     $row = mysqli_fetch_assoc($update_category_query);
     $cat_id = $row['cat_id'];
@@ -107,10 +103,7 @@ function update_category()
         $the_cat_title = $_POST['cat_title'];
         $query = "UPDATE categories SET cat_title = '{$the_cat_title}' WHERE cat_id = '{$cat_id}' ";
         $update_query = mysqli_query($connection, $query);
-
-        if (!$update_query)
-            die('UPDATE FAILED ' . mysqli_error($connection));
-
+        check_query($update_query);
         header("Location: admin-categories.php");
     }
 }
@@ -144,10 +137,7 @@ function create_new_post()
         $query .= "'{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}')";
 
         $add_new_post = mysqli_query($connection, $query);
-
-        if (!$add_new_post)
-            die('UPDATE FAILED ' . mysqli_error($connection));
-
+        check_query($add_new_post);
     }
 }
 
@@ -162,6 +152,7 @@ function load_all_posts()
 
     $query = "SELECT * FROM posts";
     $select_all_posts_query = mysqli_query($connection, $query);
+    check_query($select_all_posts_query);
 
     while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
 
@@ -201,9 +192,22 @@ function load_navigation_categories()
 
     $query = "SELECT * FROM categories";
     $select_all_categories_query = mysqli_query($connection, $query);
+    check_query($select_all_categories_query);
 
     while ($row = mysqli_fetch_assoc($select_all_categories_query)) {
         $cat_title = $row['cat_title'];
         echo "<li><a href='#'>{$cat_title}</a></li>";
     }
+}
+
+/**
+ * function checkQuery($obj_query)
+ *
+ * @param   object $mysqli_query     mysqli_query() return value
+ */
+function check_query($mysqli_query)
+{
+    global $connection;
+    if(!$mysqli_query)
+        die("Query Failed -> Error -> " . mysqli_error($connection));
 }

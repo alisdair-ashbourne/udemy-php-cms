@@ -21,7 +21,7 @@
     </tr>
     </tbody>
     <?php
-    $query = "SELECT * FROM posts LIMIT 10 ";
+    $query = "SELECT * FROM posts LIMIT 8 ";
     $select_posts = mysqli_query($connection, $query);
 
     while ($row = mysqli_fetch_assoc($select_posts)) {
@@ -45,6 +45,7 @@
             . "<td>$post_tags</td>"
             . "<td>$post_comment_count</td>"
             . "<td>$post_date</td>"
+            . "<td><a class='btn btn-primary' href='?source=edit_post&p_id=$post_id'><i class='fa fa-pencil'></i></a></td>"
             . "<td><a class='btn btn-danger' href='?delete=$post_id'><i class='fa fa-trash'></i></a></td>"
             . "</tr>";
     }
