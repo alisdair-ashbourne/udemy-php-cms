@@ -142,9 +142,53 @@ function create_new_post()
 }
 
 /**
+ * function load_post()
+ *
+ * Loads a single post, via GET[p_id], from the database into HTML markdown
+ */
+function load_post()
+{
+    if(isset($_GET['p_id'])) {
+        global $connection;
+        $the_post_id = $_GET['p_id'];
+
+        $query = "SELECT * FROM posts WHERE post_id = {$the_post_id}";
+        $select_all_posts_query = mysqli_query($connection, $query);
+        check_query($select_all_posts_query);
+
+        $row = mysqli_fetch_assoc($select_all_posts_query);
+
+        $post_id = $row['post_id'];
+        $post_title = $row['post_title'];
+        $post_author = $row['post_author'];
+        $post_date = $row['post_date'];
+        $post_image = $row['post_image'];
+        $post_content = $row['post_content'];
+        $post_tags = $row['post_tags'];
+        $post_comment_count = $row['post_comment_count'];
+        ?>
+
+        <h2><a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
+        <p class="lead">by <a href="index.php"><?php echo $post_author ?></a></p>
+        <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
+
+        <hr>
+        <img class="img-responsive" src="<?php echo "images/" . $post_image; ?>" alt="">
+        <hr>
+
+        <p><?php echo $post_content ?></p>
+        <a class="btn btn-primary" href="#">Read More <span
+                    class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <hr>
+
+    <?php }
+}
+
+/**
  * function load_all_posts()
  *
- * Loads all post content from the database into HTML markdown
+ * Loads all posts from the database into HTML markdown
  */
 function load_all_posts()
 {
@@ -156,6 +200,7 @@ function load_all_posts()
 
     while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
 
+        $post_id = $row['post_id'];
         $post_title = $row['post_title'];
         $post_author = $row['post_author'];
         $post_date = $row['post_date'];
@@ -165,7 +210,7 @@ function load_all_posts()
         $post_comment_count = $row['post_comment_count'];
         ?>
 
-        <h2><a href="#"><?php echo $post_title; ?></a></h2>
+        <h2><a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
         <p class="lead">by <a href="index.php"><?php echo $post_author ?></a></p>
         <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
 
