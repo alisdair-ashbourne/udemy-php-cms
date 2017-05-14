@@ -12,11 +12,9 @@ if(isset($_GET['p_id'])) {
 
 $query = "SELECT * FROM posts WHERE post_id = {$the_post_id}";
 $edit_post_query = mysqli_query($connection, $query);
-
 check_query($edit_post_query);
 
 $row = mysqli_fetch_assoc($edit_post_query);
-
 $post_id = $row['post_id'];
 $post_author = $row['post_author'];
 $post_title = $row['post_title'];
@@ -39,20 +37,18 @@ $post_date = $row['post_date'];
         $post_tags = $_POST['post_tags'];
         $post_content = $_POST['post_content'];
         $post_date = date('d-m-y');
-        $post_comment_count = 1;
-        $post_image = $_FILES['post_image']['name'];
-        $post_image_temp = $_FILES['post_image']['tmp_name'];
 
-        move_uploaded_file($post_image_temp, "../images/$post_image");
-
-        if(empty($post_image)){
+        if(!empty($post_image)){
             $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
             $select_image = mysqli_query($connection, $query);
             check_query($select_image);
 
-            while ($row = mysqli_fetch_array($select_image)) {
-                $post_image = $row['post_image'];
-            }
+            $row = mysqli_fetch_array($select_image);
+            $post_image = $row['post_image'];
+        } else {
+            $post_image = $_FILES['post_image']['name'];
+            $post_image_temp = $_FILES['post_image']['tmp_name'];
+            move_uploaded_file($post_image_temp, "../images/$post_image");
         }
 
         $query = "UPDATE posts SET ";
@@ -62,8 +58,6 @@ $post_date = $row['post_date'];
         $query .= "post_author = '{$post_author}', ";
         $query .= "post_content = '{$post_content}', ";
         $query .= "post_tags = '{$post_tags}', ";
-        $query .= "post_comment_count = '{$post_comment_count}', ";
-
         $query .= "post_image = '{$post_image}', ";
         $query .= "post_status = '{$post_status}' ";
         $query .= "WHERE post_id = {$the_post_id} ";
@@ -75,11 +69,11 @@ $post_date = $row['post_date'];
 ?>
 <form action="" method="POST" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="post_title">Post Title</label>
+        <label for="post_title">Title</label>
         <input type="text" class="form-control" name="post_title" value="<?php echo $post_title; ?>">
     </div>
     <div class="form-group">
-        <label for="post_category">Post Category</label>
+        <label for="post_category">Category</label>
         <select class="form-control" name="post_category_id">
             <?php
             $query = "SELECT * FROM categories";
@@ -96,15 +90,23 @@ $post_date = $row['post_date'];
         </select>
     </div>
     <div class="form-group">
-        <label for="post_status">Post Status</label>
-        <input type="text" class="form-control" name="post_status" value="<?php echo $post_status; ?>">
+        <label for="post_status">Status</label>
+        <select class="form-control" name="post_status">
+            <option value='<?php echo $post_status; ?>'><?php echo $post_status; ?></option>
+            <?php
+            if($post_status == "Published")
+                echo "<option value='Draft'>Draft</option>";
+            else
+                echo "<option value='Published'>Publish</option>";
+            ?>
+        </select>
     </div>
     <div class="form-group">
-        <label for="post_author">Post Author</label>
+        <label for="post_author">Author</label>
         <input type="text" class="form-control" name="post_author" value="<?php echo $post_author; ?>">
     </div>
     <div class="form-group">
-        <label for="post_image">Post Image</label>
+        <label for="post_image">Image</label>
         <div class="row">
             <div class="col-xs-12" style="margin-bottom: 10px;">
                 <img src="../images/<?php echo $post_image; ?>" alt="Original Post Image" width="400">
@@ -113,11 +115,11 @@ $post_date = $row['post_date'];
         <input type="file" class="form-control" name="post_image">
     </div>
     <div class="form-group">
-        <label for="post_tags">Post Tags</label>
+        <label for="post_tags">Tags</label>
         <input type="text" class="form-control" name="post_tags" value="<?php echo $post_tags; ?>">
     </div>
     <div class="form-group">
-        <label for="post_content">Post Content</label>
+        <label for="post_content">Content</label>
         <textarea class="form-control" name="post_content" cols="30" rows="10"><?php echo $post_content; ?></textarea>
     </div>
 

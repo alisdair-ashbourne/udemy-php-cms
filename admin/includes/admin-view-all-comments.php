@@ -75,6 +75,11 @@
         $the_comment_id = $_GET['delete'];
         $query = "DELETE FROM comments WHERE comment_id = '{$the_comment_id}' ";
         $delete_query = mysqli_query($connection, $query);
+
+        $query = "UPDATE posts SET post_comment_count = post_comment_count - 1 WHERE post_id = {$comment_post_id} ";
+        $subtract_comment_count_query = mysqli_query($connection, $query);
+        check_query($subtract_comment_count_query);
+
         check_query($delete_query);
         header("Location: admin-comments.php");
     }

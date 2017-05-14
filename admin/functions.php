@@ -132,10 +132,6 @@ function create_new_post()
 
         move_uploaded_file($post_image_temp, "../images/$post_image");
 
-        $query = "UPDATE posts SET post_comment_count = post_comment_count - 1 ";
-        $subtract_comment_count_query = mysqli_query($connection, $query);
-        check_query($subtract_comment_count_query);
-
         $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
         $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', now(), ";
         $query .= "'{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}')";
@@ -195,7 +191,7 @@ function load_all_posts()
 {
     global $connection;
 
-    $query = "SELECT * FROM posts";
+    $query = "SELECT * FROM posts WHERE post_status = 'Published' ";
     $select_all_posts_query = mysqli_query($connection, $query);
     check_query($select_all_posts_query);
 
@@ -207,8 +203,6 @@ function load_all_posts()
         $post_date = $row['post_date'];
         $post_image = $row['post_image'];
         $post_content = substr($row['post_content'], 0, 200) . "...";
-        $post_tags = $row['post_tags'];
-        $post_comment_count = $row['post_comment_count'];
         ?>
 
         <h2><a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
