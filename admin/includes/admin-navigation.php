@@ -123,14 +123,18 @@
             </li>
 
             <li>
-                <a href="javascript:" data-toggle="collapse" data-target="#users"><i class="fa fa-fw fa-wrench"></i>
-                    Users <i class="fa fa-fw fa-caret-down"></i></a>
+                <a href="javascript:;" data-toggle="collapse" data-target="#Users"><i class="fa fa-fw fa-wrench"></i>
+                    Users <i class="fa fa-fw fa-caret-down"></i>
+                </a>
                 <ul id="Users" class="collapse">
                     <li>
-                        <a href="#"> Profile</a>
+                        <a href="admin-users.php?source=view_profile"> Profile</a>
                     </li>
                     <li>
-                        <a href="#"> Add a Category</a>
+                        <a href="admin-users.php?source=add_user"> Add User</a>
+                    </li>
+                    <li>
+                        <a href="admin-users.php?source=view_all_users"> View Users</a>
                     </li>
                 </ul>
             </li>
