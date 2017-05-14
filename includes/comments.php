@@ -20,6 +20,7 @@ if (isset($_GET['p_id'])) {
         $comment_content = $row['comment_content'];
         $comment_date = $row['comment_date'];
         $comment_status = $row['comment_status'];
+        $comment_status = $row['comment_status'];
 
         if ($comment_status == 'Unapproved') {
             continue;

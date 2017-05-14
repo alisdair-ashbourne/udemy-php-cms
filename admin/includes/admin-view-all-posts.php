@@ -35,10 +35,11 @@
         $post_comment_count = $row['post_comment_count'];
         $post_date = $row['post_date'];
 
+
         echo "<tr>"
             . "<td>$post_id</td>"
             . "<td>$post_author</td>"
-            . "<td>$post_title</td>";
+            . "<td><a href='../post.php?p_id={$post_id}'>$post_title</a></td>";
 
             $query = "SELECT * FROM categories WHERE cat_id = {$post_category_id} ";
             $update_category_query = mysqli_query($connection, $query);
@@ -62,10 +63,7 @@
         $the_post_id = $_GET['delete'];
         $query = "DELETE FROM posts WHERE post_id = '{$the_post_id}' ";
         $delete_query = mysqli_query($connection, $query);
-
-        if(!$delete_query)
-            die(mysqli_error($connection) . " DELETE QUERY FAILED");
-
+        check_query($delete_query);
         header("Location: admin-posts.php");
     }
     ?>

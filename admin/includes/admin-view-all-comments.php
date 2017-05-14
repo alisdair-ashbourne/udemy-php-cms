@@ -37,7 +37,7 @@
         $change_comment_status = function($comment_status, $comment_id) {
            $comment_status=="Unapproved" ?
                $change_comment_status = array('Approve','admin-comments.php?status=Approve&c_id=' . $comment_id ):
-               $change_comment_status = array('Unapproved','admin-comments.php?status=Unapproved&c_id=' . $comment_id );
+               $change_comment_status = array('Disapprove','admin-comments.php?status=Unapproved&c_id=' . $comment_id );
            return $change_comment_status;
         };
 

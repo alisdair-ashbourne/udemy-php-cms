@@ -126,16 +126,19 @@ function create_new_post()
         $post_tags = $_POST['post_tags'];
         $post_content = $_POST['post_content'];
         $post_date = date('d-m-y');
-        $post_comment_count = 1;
+        $post_comment_count = 0;
         $post_image = $_FILES['post_image']['name'];
         $post_image_temp = $_FILES['post_image']['tmp_name'];
 
         move_uploaded_file($post_image_temp, "../images/$post_image");
 
+        $query = "UPDATE posts SET post_comment_count = post_comment_count - 1 ";
+        $subtract_comment_count_query = mysqli_query($connection, $query);
+        check_query($subtract_comment_count_query);
+
         $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
         $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', now(), ";
         $query .= "'{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}')";
-
         $add_new_post = mysqli_query($connection, $query);
         check_query($add_new_post);
     }

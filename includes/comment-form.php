@@ -13,6 +13,11 @@ if(isset($_GET['p_id'])) {
         $comment_email = $_POST['comment_email'];
         $comment_content = $_POST['comment_content'];
 
+        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+        $query .= "WHERE post_id = $the_post_id ";
+        $update_comment_count_query = mysqli_query($connection, $query);
+        check_query($update_comment_count_query);
+
         $query = "INSERT INTO comments(comment_post_id,comment_author,comment_email,comment_content,comment_date,comment_status) ";
         $query .= "VALUES(";
         $query .= "'{$the_post_id}', ";
@@ -20,7 +25,7 @@ if(isset($_GET['p_id'])) {
         $query .= "'{$comment_email}', ";
         $query .= "'{$comment_content}', ";
         $query .= "now(), ";
-        $query .= "'Needs Approval' ";
+        $query .= "'Unapproved' ";
         $query .= ") ";
 
         $post_comments = mysqli_query($connection, $query);
