@@ -26,6 +26,9 @@ include "includes/admin-header.php"; ?>
                 case 'add_user';
                     include "includes/admin-add-user.php";
                     break;
+                case 'edit_user';
+                    include "includes/admin-edit-user.php";
+                    break;
                 case 'view_profile';
                     include "includes/admin-view-profile.php";
                     break;
